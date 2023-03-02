@@ -1,0 +1,42 @@
+//https://practice.geeksforgeeks.org/problems/number-of-distinct-islands/1
+class Solution {
+
+    int countDistinctIslands(int[][] grid) {
+        // Your Code here
+        int m=grid.length;
+        int n=grid[0].length;
+        boolean[][]visited=new boolean[m][n];
+        HashSet<ArrayList<String>>hs=new HashSet<>();
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(!visited[i][j] && grid[i][j]==1){
+                 ArrayList<String>cur=new ArrayList<>();
+                    dfs(grid,visited,cur,i,j,i,j);
+                    hs.add(cur);
+                }
+            }
+        }
+        return hs.size();
+    }
+    int[][]dir={{1,0},{0,1},{-1,0},{0,-1}};
+    private void dfs(int[][]grid,boolean[][]visited,ArrayList<String>cur,int r,int c,int x0,int y0){
+        int row=grid.length;
+        int col=grid[0].length;
+        visited[r][c]=true;
+                for(int i=0;i<4;i++){
+                    int x=r+dir[i][0];
+                    int y=c+dir[i][1];
+                    if(isValid(x,y,grid) && !visited[x][y]){
+                        String s=(x-x0) + "#"+ (y-y0);
+                        cur.add(s);
+                        dfs(grid,visited,cur,x,y,x0,y0);
+                   }
+                }
+    }
+    boolean isValid(int x,int y,int[][]grid){
+        int m=grid.length;
+        int n=grid[0].length;
+        if(x<0 || y<0 || x>=m || y>=n ||grid[x][y]!=1) return false;
+        return true;
+    }
+}

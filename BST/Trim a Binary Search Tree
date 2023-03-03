@@ -1,0 +1,14 @@
+//https://leetcode.com/problems/trim-a-binary-search-tree/
+TreeNode* trimBST(TreeNode* root, int low, int high) {
+        if(root==NULL)return root;
+        if(root->val>high){
+            return trimBST(root->left,low,high);
+        }
+        else if(root->val<low){
+            return trimBST(root->right,low,high);
+        }
+        //we are in valid range
+        root->left=trimBST(root->left,low,high);
+        root->right=trimBST(root->right,low,high);
+        return root;
+    }

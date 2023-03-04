@@ -43,29 +43,19 @@ class Solution {//O(n^3)->O(n^2 log n)->
         return start;
     }
 }
-//less optimal approach
-class Solution {//O(n^3)->O(n^2 log n)->
+//bruteforce approach
+class Solution {//O(n^3)->
     public int triangleNumber(int[] nums) {
         int n=nums.length;
-        Arrays.sort(nums);
         int count=0;
-        int end=n-1;
-        int start=0;
-        for(int i=0;i<n-2;i++){
-            int k=i+1;
-            for(int j=i+1;j<n-1;j++){
-               k= search(nums,k,n-1,nums[i]+nums[j]);
-               count+=k-j>0?k-j:0;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                for(int k=j+1;k<n;k++){
+                    if(nums[i]+nums[j]>nums[k] && nums[i]<nums[j]+nums[k] &&
+                     nums[i]+nums[k]>nums[j]) count++;
+                }
             }
         }
         return count;
-    }
-    private int search(int[] nums,int start,int end,int x){
-        while(start<end){
-            int mid=start+(end-start+1)/2;
-            if(x<=nums[mid]) end=mid-1;
-            else start=mid;
-        }
-        return start;
     }
 }
